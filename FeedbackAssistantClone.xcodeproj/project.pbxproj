@@ -16,6 +16,8 @@
 		C85C5DEB2B777B6B004356FB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85C5DEA2B777B6B004356FB /* ContentView.swift */; };
 		C85C5DED2B777B6C004356FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C85C5DEC2B777B6C004356FB /* Assets.xcassets */; };
 		C85C5DF12B777B6C004356FB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C85C5DF02B777B6C004356FB /* Preview Assets.xcassets */; };
+		C896B3C12B82961800A72C0D /* Issue-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C896B3C02B82961800A72C0D /* Issue-CoreDataHelpers.swift */; };
+		C896B3C32B829C0800A72C0D /* Tag-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C896B3C22B829C0800A72C0D /* Tag-CoreDataHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		C85C5DEC2B777B6C004356FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C85C5DEE2B777B6C004356FB /* FeedbackAssistantClone.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FeedbackAssistantClone.entitlements; sourceTree = "<group>"; };
 		C85C5DF02B777B6C004356FB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C896B3C02B82961800A72C0D /* Issue-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Issue-CoreDataHelpers.swift"; sourceTree = "<group>"; };
+		C896B3C22B829C0800A72C0D /* Tag-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag-CoreDataHelpers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,8 @@
 				C85C5DEC2B777B6C004356FB /* Assets.xcassets */,
 				C85C5DEE2B777B6C004356FB /* FeedbackAssistantClone.entitlements */,
 				C85C5DEF2B777B6C004356FB /* Preview Content */,
+				C896B3C02B82961800A72C0D /* Issue-CoreDataHelpers.swift */,
+				C896B3C22B829C0800A72C0D /* Tag-CoreDataHelpers.swift */,
 			);
 			path = FeedbackAssistantClone;
 			sourceTree = "<group>";
@@ -157,7 +163,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C84616792B77D86300A2F363 /* Filter.swift in Sources */,
+				C896B3C32B829C0800A72C0D /* Tag-CoreDataHelpers.swift in Sources */,
 				C84616702B778A2700A2F363 /* Main.xcdatamodeld in Sources */,
+				C896B3C12B82961800A72C0D /* Issue-CoreDataHelpers.swift in Sources */,
 				C84616772B77BC9B00A2F363 /* DetailView.swift in Sources */,
 				C84616722B778D7F00A2F363 /* DataController.swift in Sources */,
 				C84616752B77BC8A00A2F363 /* SidebarView.swift in Sources */,

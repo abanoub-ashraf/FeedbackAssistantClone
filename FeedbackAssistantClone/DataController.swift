@@ -23,13 +23,13 @@ class DataController: ObservableObject {
         
         if inMemory {
             ///
-            /// if in meomry then this is either for testing or for swiftui preview
+            /// if in memory then this is either for testing or for swiftui preview
             ///
             self.container.persistentStoreDescriptions.first?.url = URL(filePath: "/dev/null")
         }
         
         ///
-        /// this is the data base, the long term storage
+        /// this is the database, the longterm storage
         ///
         self.container.loadPersistentStores { storeDescription, error in
             if let error {
@@ -63,14 +63,14 @@ class DataController: ObservableObject {
         }
         
         ///
-        /// this method save the chagnes happened to the objects in ram on the presistance store
+        /// this method save the changes happened to the objects in ram on the persistence store
         ///
         try? viewContext.save()
     }
     
     func save() {
         ///
-        /// only save when there's uncommited changes
+        /// only save when there's uncommitted changes
         ///
         if self.container.viewContext.hasChanges {
             try? self.container.viewContext.save()
