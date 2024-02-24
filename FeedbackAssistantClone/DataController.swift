@@ -21,12 +21,38 @@ class DataController: ObservableObject {
     init(inMemory: Bool = false) {
         self.container = NSPersistentContainer(name: "Main")
         
+        ///
+        /// if in memory then this is either for testing or for swiftui preview
+        ///
         if inMemory {
-            ///
-            /// if in memory then this is either for testing or for swiftui preview
-            ///
             self.container.persistentStoreDescriptions.first?.url = URL(filePath: "/dev/null")
         }
+        
+        ///
+        /// - these two tells CoreData how to handle syncing data across multiple devices
+        ///
+        /// - tells CoreData what to do if a change happens to the data while it's running
+        ///   we're telling it to stay in sync automatically
+        ///
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        ///
+        /// tells CoreData how the merge between local and remote changes should happen
+        /// by specifying that the in memory changes are more important than the remote ones
+        ///
+        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+        ///
+        /// we wanna be notified whenever any writes or changes to our resistance store happens, tells us so we can update the ui
+        ///
+        container.persistentStoreDescriptions.first?.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+        ///
+        /// after we are notified, call the remoteStoreChanged which will emmet to the ui so we can update the ui
+        ///
+        NotificationCenter.default.addObserver(
+            forName: .NSPersistentStoreRemoteChange,
+            object: container.persistentStoreCoordinator,
+            queue: .main,
+            using: remoteStoreChanged
+        )
         
         ///
         /// this is the database, the longterm storage
@@ -36,6 +62,10 @@ class DataController: ObservableObject {
                 fatalError("Fatal error loading store: \(error.localizedDescription)")
             }
         }
+    }
+    
+    func remoteStoreChanged(_ notification: Notification) {
+        objectWillChange.send()
     }
     
     func createSampleData() {
