@@ -18,6 +18,7 @@
 		C85C5DF12B777B6C004356FB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C85C5DF02B777B6C004356FB /* Preview Assets.xcassets */; };
 		C896B3C12B82961800A72C0D /* Issue-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C896B3C02B82961800A72C0D /* Issue-CoreDataHelpers.swift */; };
 		C896B3C32B829C0800A72C0D /* Tag-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C896B3C22B829C0800A72C0D /* Tag-CoreDataHelpers.swift */; };
+		C8BC31A32B8A6725008E1C0B /* IssueRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BC31A22B8A6725008E1C0B /* IssueRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		C85C5DF02B777B6C004356FB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C896B3C02B82961800A72C0D /* Issue-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Issue-CoreDataHelpers.swift"; sourceTree = "<group>"; };
 		C896B3C22B829C0800A72C0D /* Tag-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag-CoreDataHelpers.swift"; sourceTree = "<group>"; };
+		C8BC31A22B8A6725008E1C0B /* IssueRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				C84616712B778D7F00A2F363 /* DataController.swift */,
 				C84616742B77BC8A00A2F363 /* SidebarView.swift */,
 				C85C5DEA2B777B6B004356FB /* ContentView.swift */,
+				C8BC31A22B8A6725008E1C0B /* IssueRow.swift */,
 				C84616762B77BC9B00A2F363 /* DetailView.swift */,
 				C846166E2B778A2700A2F363 /* Main.xcdatamodeld */,
 				C85C5DEC2B777B6C004356FB /* Assets.xcassets */,
@@ -170,6 +173,7 @@
 				C84616722B778D7F00A2F363 /* DataController.swift in Sources */,
 				C84616752B77BC8A00A2F363 /* SidebarView.swift in Sources */,
 				C85C5DEB2B777B6B004356FB /* ContentView.swift in Sources */,
+				C8BC31A32B8A6725008E1C0B /* IssueRow.swift in Sources */,
 				C85C5DE92B777B6B004356FB /* FeedbackAssistantCloneApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
