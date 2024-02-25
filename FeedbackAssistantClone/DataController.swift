@@ -12,6 +12,7 @@ class DataController: ObservableObject {
     
     @Published var selectedFilter: Filter? = Filter.all
     @Published var selectedIssue: Issue?
+    @Published var filterText = ""
     
     private var saveTask: Task<Void, Error>?
     
@@ -178,5 +179,51 @@ class DataController: ObservableObject {
         let difference = allTagsSet.symmetricDifference(issue.issueTags)
         
         return difference.sorted()
+    }
+    
+    ///
+    /// if we have a selected filter from SidebarView then get the issues from its tag
+    /// otherwise then fetch the issues that was added recently
+    ///
+    func issuesForSelectedFilter() -> [Issue] {
+        let filter = selectedFilter ?? .all
+        var predicates = [NSPredicate]()
+        
+        if let tag = filter.tag {
+            ///
+            /// get the issues of this tag if a tag is selected from the sidebar
+            ///
+            let tagPredicate = NSPredicate(format: "tags CONTAINS %@", tag)
+            predicates.append(tagPredicate)
+        } else {
+            let datePredicate = NSPredicate(format: "modificationDate > %@", filter.minModificationDate as NSDate)
+            predicates.append(datePredicate)
+        }
+        
+        ///
+        /// - searching predicates
+        ///
+        /// - CONTAINS[c] this means case insensitive search
+        ///
+        let trimmedFilterText = filterText.trimmingCharacters(in: .whitespaces)
+        
+        if trimmedFilterText.isEmpty == false {
+            let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", trimmedFilterText)
+            let contentPredicate = NSPredicate(format: "content CONTAINS[c] %@", trimmedFilterText)
+            ///
+            /// this compound predicate has one of its sub predicates is true not both
+            ///
+            let combinedPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, contentPredicate])
+            predicates.append(combinedPredicate)
+        }
+        
+        let request = Issue.fetchRequest()
+        ///
+        /// use all predicates in one predicate, all of them must be true
+        ///
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        
+        let allIssues = (try? container.viewContext.fetch(request)) ?? []
+        return allIssues.sorted()
     }
 }

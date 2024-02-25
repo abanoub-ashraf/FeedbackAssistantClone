@@ -10,26 +10,9 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var dataController: DataController
     
-    ///
-    /// if we have a selected filter from SidebarView then get the issues from its tag
-    /// otherwise then fetch the issues that was added recently
-    ///
-    var issues: [Issue] {
-        let filter = dataController.selectedFilter ?? .all
-        var allIssues: [Issue]
-        
-        if let tag = filter.tag {
-            allIssues = tag.issues?.allObjects as? [Issue] ?? []
-        } else {
-            let request = Issue.fetchRequest()
-            request.predicate = NSPredicate(format: "modificationDate > %@", filter.minModificationDate as NSDate)
-            allIssues = (try? dataController.container.viewContext.fetch(request)) ?? []
-        }
-        
-        return allIssues.sorted()
-    }
-    
     func delete(_ offsets: IndexSet) {
+        let issues = dataController.issuesForSelectedFilter()
+        
         for offset in offsets {
             let item = issues[offset]
             dataController.delete(item)
@@ -38,11 +21,12 @@ struct ContentView: View {
     
     var body: some View {
         List(selection: $dataController.selectedIssue) {
-            ForEach(issues) { issue in
+            ForEach(dataController.issuesForSelectedFilter()) { issue in
                 IssueRow(issue: issue)
             }
             .onDelete(perform: delete)
         }
         .navigationTitle("Issues")
+        .searchable(text: $dataController.filterText, prompt: "Filter issues")
     }
 }
