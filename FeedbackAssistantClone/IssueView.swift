@@ -77,6 +77,13 @@ struct IssueView: View {
             }
         }
         .disabled(issue.isDeleted)
+        ///
+        /// an action to perform when this view detects data emitted by a publisher
+        /// which is the issue
+        ///
+        .onReceive(issue.objectWillChange) { _ in
+            dataController.queueSave()
+        }
     }
 }
 

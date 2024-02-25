@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct FeedbackAssistantCloneApp: App {
     @StateObject var dataController = DataController()
+    @Environment(\.scenePhase) var scenePhase
     
     var body: some Scene {
         WindowGroup {
@@ -22,6 +23,14 @@ struct FeedbackAssistantCloneApp: App {
             }
             .environment(\.managedObjectContext, dataController.container.viewContext)
             .environmentObject(dataController)
+            ///
+            /// if user swipe the app up to terminate then call save to save the data
+            ///
+            .onChange(of: scenePhase) { phase in
+                if phase != .active {
+                    dataController.save()
+                }
+            }
         }
     }
 }
