@@ -23,7 +23,7 @@ struct IssueRow: View {
                         .font(.headline)
                         .lineLimit(1)
                     
-                    Text("No Tags")
+                    Text(issue.issueTagsList)
                         .foregroundStyle(.secondary)
                         ///
                 		/// this means it will take height of 2 lines even if the text is only one line

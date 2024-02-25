@@ -11,6 +11,7 @@ class DataController: ObservableObject {
     let container: NSPersistentContainer
     
     @Published var selectedFilter: Filter? = Filter.all
+    @Published var selectedIssue: Issue?
     
     static var preview: DataController = {
         let dataController = DataController(inMemory: true)
@@ -152,5 +153,15 @@ class DataController: ObservableObject {
         self.delete(request2)
         
         self.save()
+    }
+    
+    func missingTags(from issue: Issue) -> [Tag] {
+        let request = Tag.fetchRequest()
+        let allTags = (try? container.viewContext.fetch(request)) ?? []
+        
+        let allTagsSet = Set(allTags)
+        let difference = allTagsSet.symmetricDifference(issue.issueTags)
+        
+        return difference.sorted()
     }
 }

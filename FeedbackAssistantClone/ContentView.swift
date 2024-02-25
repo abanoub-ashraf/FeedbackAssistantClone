@@ -10,6 +10,10 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var dataController: DataController
     
+    ///
+    /// if we have a selected filter from SidebarView then get the issues from its tag
+    /// otherwise then fetch the issues that was added recently
+    ///
     var issues: [Issue] {
         let filter = dataController.selectedFilter ?? .all
         var allIssues: [Issue]
@@ -33,7 +37,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        List {
+        List(selection: $dataController.selectedIssue) {
             ForEach(issues) { issue in
                 IssueRow(issue: issue)
             }
