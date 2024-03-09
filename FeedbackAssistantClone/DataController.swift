@@ -290,4 +290,26 @@ class DataController: ObservableObject {
         let allIssues = (try? container.viewContext.fetch(request)) ?? []
         return allIssues.sorted()
     }
+    
+    func newIssue() {
+        let issue = Issue(context: container.viewContext)
+        issue.title = "New Issue"
+        issue.creationDate = .now
+        issue.priority = 1
+        
+        ///
+        /// if currently there's a filter selected then add its tag to the tags of the new issue
+        ///
+        if let tag = selectedFilter?.tag {
+            issue.addToTags(tag)
+        }
+        
+        save()
+        
+        ///
+        /// assign the new issue to be the selected one so it trigger a ui update
+        /// that makes that issue display to the user immediately
+        ///
+        selectedIssue = issue
+    }
 }
