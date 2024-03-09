@@ -7,6 +7,18 @@
 
 import CoreData
 
+///
+/// how to sort the data
+///
+enum SortType: String {
+    case dateCreated = "creationDate"
+    case dateModified = "modificationDate"
+}
+
+enum Status {
+    case all, open, closed
+}
+
 class DataController: ObservableObject {
     let container: NSPersistentContainer
     
@@ -14,6 +26,11 @@ class DataController: ObservableObject {
     @Published var selectedIssue: Issue?
     @Published var filterText = ""
     @Published var filterTokens = [Tag]()
+    @Published var filterEnabled = false
+    @Published var filterPriority = -1
+    @Published var filterStatus = Status.all
+    @Published var sortType = SortType.dateCreated
+    @Published var sortNewestFirst = true
     
     ///
     /// get all the tags that their name start with what the user typing in filterText
@@ -247,11 +264,28 @@ class DataController: ObservableObject {
             }
         }
         
+        if filterEnabled {
+            if filterPriority >= 0 {
+                let priorityFilter = NSPredicate(format: "priority = %d", filterPriority)
+                predicates.append(priorityFilter)
+            }
+            
+            if filterStatus != .all {
+                let lookForClosed = filterStatus == .closed
+                let statusFilter = NSPredicate(format: "completed = %@", NSNumber(value: lookForClosed))
+                predicates.append(statusFilter)
+            }
+        }
+        
         let request = Issue.fetchRequest()
         ///
         /// use all predicates in one predicate, all of them must be true
         ///
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        
+        request.sortDescriptors = [
+            NSSortDescriptor(key: sortType.rawValue, ascending: sortNewestFirst)
+        ]
         
         let allIssues = (try? container.viewContext.fetch(request)) ?? []
         return allIssues.sorted()
