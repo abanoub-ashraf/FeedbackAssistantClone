@@ -13,6 +13,10 @@ struct SidebarView: View {
     
     @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var tags: FetchedResults<Tag>
     
+    @State private var tagToRename: Tag?
+    @State private var renamingTag = false
+    @State private var tagName = ""
+    
     var tagFilters: [Filter] {
         tags.map { tag in
             Filter(id: tag.tagID, name: tag.tagName, icon: "tag", tag: tag)
@@ -24,6 +28,17 @@ struct SidebarView: View {
             let item = tags[offset]
             dataController.delete(item)
         }
+    }
+    
+    func rename(_ filter: Filter) {
+        tagToRename = filter.tag
+        tagName = filter.name
+        renamingTag = true
+    }
+    
+    func completeRename() {
+        tagToRename?.name = tagName
+        dataController.save()
     }
     
     var body: some View {
@@ -41,6 +56,16 @@ struct SidebarView: View {
                     NavigationLink(value: filter) {
                         Label(filter.name, systemImage: filter.icon)
                             .badge(filter.tag?.tagActiveIssues.count ?? 0)
+                        	///
+                        	/// this is a menu show up when you keep pressing on each tag row
+                        	///
+                            .contextMenu {
+                                Button {
+                                    rename(filter)
+                                } label: {
+                                    Label("Rename", systemImage: "pencil")
+                                }
+                            }
                     }
                 }
                 .onDelete(perform: delete)
@@ -58,6 +83,12 @@ struct SidebarView: View {
             } label: {
                 Label("ADD SAMPLES", systemImage: "flame")
             }
+            #endif
+        }
+        .alert("Rename tag", isPresented: $renamingTag) {
+            Button("Ok", action: completeRename)
+            Button("Cancel", role: .cancel) { }
+            TextField("New name", text: $tagName)
         }
     }
 }
