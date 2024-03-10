@@ -47,6 +47,11 @@ struct SidebarView: View {
             }
         }
         .toolbar {
+            Button(action: dataController.newTag) {
+                Label("Add tag", systemImage: "plus")
+            }
+            
+            #if DEBUG
             Button {
                 dataController.deleteAll()
                 dataController.createSampleData()
