@@ -288,7 +288,7 @@ class DataController: ObservableObject {
         ]
         
         let allIssues = (try? container.viewContext.fetch(request)) ?? []
-        return allIssues.sorted()
+        return allIssues
     }
     
     func newIssue() {
