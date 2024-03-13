@@ -139,6 +139,8 @@ class DataController: ObservableObject {
     }
     
     func save() {
+        saveTask?.cancel()
+        
         ///
         /// only save when there's uncommitted changes
         ///
