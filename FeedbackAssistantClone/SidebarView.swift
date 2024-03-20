@@ -63,7 +63,7 @@ struct SidebarView: View {
                 ForEach(tagFilters) { filter in
                     NavigationLink(value: filter) {
                         Label(filter.name, systemImage: filter.icon)
-                            .badge(filter.tag?.tagActiveIssues.count ?? 0)
+                            .badge(filter.activeIssuesCount)
                         	///
                         	/// this is a menu show up when you keep pressing on each tag row
                         	///
@@ -79,8 +79,13 @@ struct SidebarView: View {
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                 }
-
                             }
+                            .accessibilityElement()
+                            .accessibilityLabel(filter.name)
+                        	///
+                        	/// automatic grammar agreement
+                        	///
+                            .accessibilityHint("^[\(filter.activeIssuesCount) issue](inflect: true)")
                     }
                 }
                 .onDelete(perform: delete)
